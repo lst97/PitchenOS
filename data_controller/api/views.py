@@ -7,11 +7,9 @@ from rest_framework.response import Response
 class InitDBView(APIView):
     def get(self, request, format=None):
         try:
-            init_db()
+            return Response(init_db(), status=status.HTTP_200_OK)
         except Exception as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
-        
-        return Response(str("DB Initialization SUCCESS."), status=status.HTTP_200_OK)
 
 class DrinksView(APIView):
     def get(self, request, format=None):
