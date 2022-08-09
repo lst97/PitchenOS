@@ -1,6 +1,6 @@
 from rest_framework import status
 from .serializers import CreateCategorySerializer, CategorySerializer, ProductSerializer, VariantSerializer, OptionSerializer
-from .models import Category, Product, Variant, Option, init_db
+from .models import Category, Product, Variant, Option, init_db, Category_ID
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -13,8 +13,27 @@ class InitDBView(APIView):
 
 class DrinksView(APIView):
     def get(self, request, format=None):
-        return Response(Product.objects.filter(category_id=1).values(), status=status.HTTP_200_OK)
+        return Response(Product.objects.filter(category_id=Category_ID.DRINKS).values(), status=status.HTTP_200_OK)
 
+class BreakfastsView(APIView):
+    def get(self, request, format=None):
+        return Response(Product.objects.filter(category_id=Category_ID.BREAKFASTS).values(), status=status.HTTP_200_OK)
+
+class AsiansView(APIView):
+    def get(self, request, format=None):
+        return Response(Product.objects.filter(category_id=Category_ID.ASIANS).values(), status=status.HTTP_200_OK)
+
+class KidsView(APIView):
+    def get(self, request, format=None):
+        return Response(Product.objects.filter(category_id=Category_ID.KIDS).values(), status=status.HTTP_200_OK)
+
+class SnacksView(APIView):
+    def get(self, request, format=None):
+        return Response(Product.objects.filter(category_id=Category_ID.SNACKS).values(), status=status.HTTP_200_OK)
+
+class DessertsView(APIView):
+    def get(self, request, format=None):
+        return Response(Product.objects.filter(category_id=Category_ID.DESSERTS).values(), status=status.HTTP_200_OK)
 class CategoryView(APIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
