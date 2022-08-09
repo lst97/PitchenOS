@@ -43,43 +43,95 @@ function fetchProductDrinks() {
     return data;
 }
 
-function fetchProductBreakfast() {
-    return;
+function fetchProductBreakfasts() {
+    const [data, setData] = useState([[]]);
+    const request_options = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    };
+    const getData = () => {
+        fetch("/api/fetch-product-breakfasts", request_options)
+            .then((response) => response.json())
+            .then((myJson) => setData(myJson));
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    return data;
 }
 
-function fetchProductAsianFood() {
-    return;
+function fetchProductAsians() {
+    const [data, setData] = useState([[]]);
+    const request_options = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    };
+    const getData = () => {
+        fetch("/api/fetch-product-asians", request_options)
+            .then((response) => response.json())
+            .then((myJson) => setData(myJson));
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    return data;
 }
 
-function fetchProductKid() {
-    return;
+function fetchProductKids() {
+    const [data, setData] = useState([[]]);
+    const request_options = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    };
+    const getData = () => {
+        fetch("/api/fetch-product-kids", request_options)
+            .then((response) => response.json())
+            .then((myJson) => setData(myJson));
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    return data;
 }
 
-function fetchProductSnack() {
-    return;
+function fetchProductSnacks() {
+    const [data, setData] = useState([[]]);
+    const request_options = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    };
+    const getData = () => {
+        fetch("/api/fetch-product-snacks", request_options)
+            .then((response) => response.json())
+            .then((myJson) => setData(myJson));
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    return data;
 }
 
-function fetchProductDessert() {
-    return;
+function fetchProductDesserts() {
+    const [data, setData] = useState([[]]);
+    const request_options = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+    };
+    const getData = () => {
+        fetch("/api/fetch-product-desserts", request_options)
+            .then((response) => response.json())
+            .then((myJson) => setData(myJson));
+    }
+    useEffect(() => {
+        getData();
+    }, []);
+
+    return data;
 }
-
-// function FetchOptionDrinks() {
-//     const [data, setData] = useState([[]]);
-//     const request_options = {
-//         method: "GET",
-//         headers: { "Content-Type": "application/json" },
-//     };
-//     const getData = () => {
-//         fetch("/api/fetch-option", request_options)
-//             .then((response) => response.json())
-//             .then((myJson) => setData(myJson));
-//     }
-//     useEffect(() => {
-//         getData();
-//     }, []);
-
-//     return data;
-// }
 
 function createPannel(categorie_data) {
     if (typeof categorie_data != "undefined") {
@@ -104,7 +156,7 @@ function createPannel(categorie_data) {
     return;
 }
 function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+    const { children, value, index, api_call, ...other } = props;
     return (
         <div
             role="tabpanel"
@@ -114,12 +166,7 @@ function TabPanel(props) {
             {...other}
             sx={{ display: "flex" }}
         >
-            {value === 0 && (createPannel(fetchProductDrinks()))}
-            {value === 1 && (createPannel(fetchProductBreakfast()))}
-            {value === 2 && (createPannel(fetchProductAsianFood()))}
-            {value === 3 && (createPannel(fetchProductKid()))}
-            {value === 4 && (createPannel(fetchProductSnack()))}
-            {value === 5 && (createPannel(fetchProductDessert()))}
+            {createPannel(api_call())}
         </div>
     );
 }
@@ -143,8 +190,12 @@ function makeProducts(selectedTab) {
     return (
         <>
             {/* TODO Flex 5 items */}
-            <TabPanel value={selectedTab} index={0} ></TabPanel>
-            <TabPanel value={selectedTab} index={1} ></TabPanel>
+            <TabPanel api_call={fetchProductDrinks} value={selectedTab} index={0} ></TabPanel>
+            <TabPanel api_call={fetchProductBreakfasts} value={selectedTab} index={1} ></TabPanel>
+            <TabPanel api_call={fetchProductAsians} value={selectedTab} index={2} ></TabPanel>
+            <TabPanel api_call={fetchProductKids} value={selectedTab} index={3} ></TabPanel>
+            <TabPanel api_call={fetchProductSnacks} value={selectedTab} index={4} ></TabPanel>
+            <TabPanel api_call={fetchProductDesserts} value={selectedTab} index={5} ></TabPanel>
         </>
     );
 }
@@ -199,7 +250,6 @@ function VerticalTabs(categories) {
 
 function VerticalTabPanel() {
     const categories = fetchCategories();
-    console.log(categories);
     return (
         VerticalTabs(categories)
     )
